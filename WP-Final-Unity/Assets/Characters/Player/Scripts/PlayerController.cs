@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     private bool Defending = false;
     private bool Die = false;
     private bool Dizzy = false;
+    private bool Gethit = false;
+
+    //Global
+    private bool Global_Gethit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,11 @@ public class PlayerController : MonoBehaviour
         {
             CoolDown_Dizzy();
         }
+        if(Gethit == true)
+        {
+            CoolDown_Gethit();
+        }
+
 
         MoveLikeTopDown();
         AnimatorControl();
@@ -81,6 +90,23 @@ public class PlayerController : MonoBehaviour
 
             // 重置計時器
             Dizzy_timer = 0f;
+        }
+    }
+
+    private float Gethit_timer = 0f;  // 計時器變數
+    private float Gethit_duration = 0.3f;  // 計時的總時間
+    private void CoolDown_Gethit()
+    {
+        // 更新計時器
+        Gethit_timer += Time.deltaTime;
+
+        // 檢查是否超過了指定的時間
+        if (Gethit_timer >= Gethit_duration)
+        {
+            Gethit = false;
+
+            // 重置計時器
+            Gethit_timer = 0f;
         }
     }
 
@@ -170,9 +196,9 @@ public class PlayerController : MonoBehaviour
 
 
         //Die
-        if(false)
+        if(true)
         {
-            Die = true;
+            //Die = true;
         }
 
 
@@ -182,6 +208,15 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T))
         {
             Dizzy = true;
+        }
+
+
+
+
+        if(Global_Gethit == true)
+        {
+            Gethit = true;
+            Global_Gethit = false;
         }
     }
 
@@ -238,6 +273,16 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Dizzy", false);
         }
+
+        //gethit
+        if (Gethit == true)
+        {
+            animator.SetBool("Gethit", true);
+        }
+        else
+        {
+            animator.SetBool("Gethit", false);
+        }
     }
 
 
@@ -273,5 +318,14 @@ public class PlayerController : MonoBehaviour
     public void Receive_Die(bool Receive_Die)
     {
         Defending = Receive_Die;
+    }
+
+    public bool Get_Gethit()
+    {
+        return Global_Gethit;
+    }
+    public void Receive_Gethit(bool Receive_Gethit)
+    {
+        Global_Gethit = Receive_Gethit;
     }
 }
