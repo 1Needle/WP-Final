@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     private float aniAttack_timer = 0f;  // 計時器變數
-    private float aniAttack_duration = 0.3f;  // 計時的總時間
+    private float aniAttack_duration = 0.25f;  // 計時的總時間
     private void CoolDown_aniAttack()
     {
         // 更新計時器
@@ -292,6 +292,23 @@ public class PlayerController : MonoBehaviour
         var move = new Vector3(vertical*face.x + horizontal*face.z,0,vertical* face.z - horizontal * face.x);
         move = move * speed * Time.deltaTime;
         characterController.Move(move);
+        if(move.x != 0 && speed == 3 && onGround == true)
+        {
+            audioController.Receive_Audio_Walk();
+        }
+        else
+        {
+            audioController.StopLooping_Walk();
+        }
+
+        if (move.x != 0 && speed == 6 && onGround == true)
+        {
+            audioController.Receive_Audio_Run();
+        }
+        else
+        {
+            audioController.StopLooping_Run();
+        }
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);  
@@ -308,7 +325,7 @@ public class PlayerController : MonoBehaviour
 
 
         //attack
-        if(Input.GetMouseButtonDown(0) && Attacking == false && Dizzy == false && Defending != true)
+        if(Input.GetMouseButtonDown(0) && Attacking == false && Dizzy == false && Defending != true && onGround == true && speed != 6)
         {
             Attacking = true;
             
