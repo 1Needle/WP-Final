@@ -19,8 +19,8 @@ public class NPCScript : MonoBehaviour
     {
         npcDialogue = "Press 'R' To Start Your Journey";
         dialogueCanvas.enabled = false;
-        Door1 = GameObject.FindObjectOfType<Door1Script>();
-        Door2 = GameObject.FindObjectOfType<Door2Script>();
+        //Door1 = GameObject.FindObjectOfType<Door1Script>();
+        //Door2 = GameObject.FindObjectOfType<Door2Script>();
     }
 
     private void Update()
