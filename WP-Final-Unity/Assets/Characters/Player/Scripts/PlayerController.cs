@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Transform Particle_SwordFire;
+    [SerializeField] Transform Particle_OnHeal;
+    [SerializeField] Transform Particle_EasterEggs_Rocket;
+
+    [SerializeField] AudioController audioController;
+
     [SerializeField] Transform GroundChecker;
     [SerializeField] float checkRadius = 0.2f; //GroundChecker
     [SerializeField] LayerMask layerMask; //GroundChecker
@@ -27,22 +34,45 @@ public class PlayerController : MonoBehaviour
     private bool Dizzy = false;
     private bool Gethit = false;
 
+    //Skills
+    private bool skills_OnFire = false;
+    private bool skills_OnHeal = false;
+
+    private bool EasterEggs_Rocket = false;
+
     //Global
+    [SerializeField] PlayerData playerData;
     private bool Global_Gethit = false;
+
+    /*//Audio
+    private bool audio_Walk;
+    private bool audio_Hit = false;
+    private bool audio_GetHit = false;
+    private bool audio_Defending_GetHit = false;*/
 
     // Start is called before the first frame update
     void Start()
     {
         characterController = transform.GetComponent<CharacterController>();
         animator = transform.GetComponent<Animator>();
+        playerData = transform.GetComponent<PlayerData>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Die == true)
+        {
+            AnimatorControl();
+            return;
+        }
         if(Attacking == true) 
         {
             CoolDown_Attack();
+        }
+        if(attack_anictrl != 0)
+        {
+            CoolDown_aniAttack();
         }
         if(Dizzy == true) 
         {
@@ -53,13 +83,34 @@ public class PlayerController : MonoBehaviour
             CoolDown_Gethit();
         }
 
+        //Skills
+        if(skills_OnFire == true)
+        {
+            Skilling_Skills_OnFire();
+        }
+        if(skills_OnFire_IsCD == true)
+        {
+            
+            CoolDown_Skills_OnFire();
+        }
+        if (skills_OnHeal == true)
+        {
+            Skilling_Skills_OnHeal();
+        }
+        if (skills_OnHeal_IsCD == true)
+        {
+
+            CoolDown_Skills_OnHeal();
+        }
+
 
         MoveLikeTopDown();
         AnimatorControl();
+        ParticleControl();
     }
 
     private float Attack_timer = 0f;  // 計時器變數
-    private float Attack_duration = 0.3f;  // 計時的總時間
+    private float Attack_duration = 1f;  // 計時的總時間
     private void CoolDown_Attack()
     {
         // 更新計時器
@@ -69,12 +120,28 @@ public class PlayerController : MonoBehaviour
         if (Attack_timer >= Attack_duration)
         {
             Attacking = false;
-            attack_anictrl = 0;
 
             // 重置計時器
             Attack_timer = 0f;
         }
     }
+    private float aniAttack_timer = 0f;  // 計時器變數
+    private float aniAttack_duration = 0.3f;  // 計時的總時間
+    private void CoolDown_aniAttack()
+    {
+        // 更新計時器
+        aniAttack_timer += Time.deltaTime;
+
+        // 檢查是否超過了指定的時間
+        if (aniAttack_timer >= aniAttack_duration)
+        {
+            attack_anictrl = 0;
+
+            // 重置計時器
+            aniAttack_timer = 0f;
+        }
+    }
+
 
     private float Dizzy_timer = 0f;  // 計時器變數
     private float Dizzy_duration = 5f;  // 計時的總時間
@@ -110,6 +177,75 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool skills_OnFire_IsCD = false;
+    private float Skills_OnFire_timer = 0f;  // 計時器變數
+    private float Skills_OnFire_duration = 5f;  // 計時的總時間
+    private void Skilling_Skills_OnFire()
+    {
+        // 更新計時器
+        Skills_OnFire_timer += Time.deltaTime;
+
+        // 檢查是否超過了指定的時間
+        if (Skills_OnFire_timer >= Skills_OnFire_duration)
+        {
+            skills_OnFire = false;
+
+            // 重置計時器
+            Skills_OnFire_timer = 0f;
+        }
+    }
+    private float CD_Skills_OnFire_timer = 0f;  // 計時器變數
+    private float CD_Skills_OnFire_duration = 20f-5f;  // 計時的總時間
+    private void CoolDown_Skills_OnFire()
+    {
+        // 更新計時器
+        CD_Skills_OnFire_timer += Time.deltaTime;
+
+        // 檢查是否超過了指定的時間
+        if (CD_Skills_OnFire_timer >= CD_Skills_OnFire_duration)
+        {
+            skills_OnFire_IsCD = false;
+
+            // 重置計時器
+            CD_Skills_OnFire_timer = 0f;
+        }
+    }
+
+    private bool skills_OnHeal_IsCD = false;
+    private float Skills_OnHeal_timer = 0f;  // 計時器變數
+    private float Skills_OnHeal_duration = 10f;  // 計時的總時間
+    private void Skilling_Skills_OnHeal()
+    {
+        // 更新計時器
+        Skills_OnHeal_timer += Time.deltaTime;
+        playerData.Get_Heal(0.01f);
+
+
+        // 檢查是否超過了指定的時間
+        if (Skills_OnHeal_timer >= Skills_OnHeal_duration)
+        {
+            skills_OnHeal = false;
+
+            // 重置計時器
+            Skills_OnHeal_timer = 0f;
+        }
+    }
+    private float CD_Skills_OnHeal_timer = 0f;  // 計時器變數
+    private float CD_Skills_OnHeal_duration = 30f - 10f;  // 計時的總時間
+    private void CoolDown_Skills_OnHeal()
+    {
+        // 更新計時器
+        CD_Skills_OnHeal_timer += Time.deltaTime;
+
+        // 檢查是否超過了指定的時間
+        if (CD_Skills_OnHeal_timer >= CD_Skills_OnHeal_duration)
+        {
+            skills_OnHeal_IsCD = false;
+
+            // 重置計時器
+            CD_Skills_OnHeal_timer = 0f;
+        }
+    }
 
 
 
@@ -172,11 +308,12 @@ public class PlayerController : MonoBehaviour
 
 
         //attack
-        if(Input.GetMouseButtonDown(0) && Attacking == false && Dizzy == false)
+        if(Input.GetMouseButtonDown(0) && Attacking == false && Dizzy == false && Defending != true)
         {
             Attacking = true;
             
             attack_anictrl = Random.Range(1, 3); //1 or 2
+            audioController.Receive_Audio_Hit();
         }
 
 
@@ -195,28 +332,45 @@ public class PlayerController : MonoBehaviour
 
 
 
-        //Die
-        if(true)
-        {
-            //Die = true;
-        }
-
-
-
-
-        //Dizzy
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Dizzy = true;
-        }
-
-
-
-
+        //Gethit
         if(Global_Gethit == true)
         {
             Gethit = true;
             Global_Gethit = false;
+            audioController.Receive_Audio_GetHit();
+        }
+
+
+
+
+        //Skills
+        //OnFire
+        if (Input.GetKeyDown(KeyCode.Alpha1) && skills_OnFire_IsCD == false)
+        {
+            playerData.Receive_dmg("OnFire");
+            skills_OnFire = true;
+            skills_OnFire_IsCD = true;
+        }
+        
+
+        //OnHeal
+        if(Input.GetKeyDown(KeyCode.Alpha2) && skills_OnHeal_IsCD == false)
+        {
+            skills_OnHeal = true;
+            skills_OnHeal_IsCD = true;
+        }
+
+        //EasterEggs
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            if(EasterEggs_Rocket == false)
+            {
+                EasterEggs_Rocket = true;
+            }
+            else
+            {
+                EasterEggs_Rocket = false;
+            }
         }
     }
 
@@ -289,6 +443,49 @@ public class PlayerController : MonoBehaviour
 
 
 
+    private void ParticleControl()
+    {
+        //Skills
+        //OnFire
+        if (skills_OnFire == true)
+        {
+            Particle_SwordFire.gameObject.SetActive(true);
+        }
+        else
+        {
+            Particle_SwordFire.gameObject.SetActive(false);
+        }
+
+        //OnHeal
+        if (skills_OnHeal == true)
+        {
+            Particle_OnHeal.gameObject.SetActive(true);
+        }
+        else
+        {
+            Particle_OnHeal.gameObject.SetActive(false);
+        }
+
+        //Rocket
+        if (EasterEggs_Rocket == true)
+        {
+            Particle_EasterEggs_Rocket.gameObject.SetActive(true);
+        }
+        else
+        {
+            Particle_EasterEggs_Rocket.gameObject.SetActive(false);
+        }
+    }
+
+
+
+
+    
+
+
+
+
+
 
     //========================================================
     //====================Global Get Value====================
@@ -317,7 +514,7 @@ public class PlayerController : MonoBehaviour
 
     public void Receive_Die(bool Receive_Die)
     {
-        Defending = Receive_Die;
+        Die = Receive_Die;
     }
 
     public bool Get_Gethit()
@@ -327,5 +524,19 @@ public class PlayerController : MonoBehaviour
     public void Receive_Gethit(bool Receive_Gethit)
     {
         Global_Gethit = Receive_Gethit;
+    }
+
+    public bool Get_Dizzy()
+    {
+        return Dizzy;
+    }
+    public void Receive_Dizzy(bool Receive_Dizzy)
+    {
+        Dizzy = Receive_Dizzy;
+    }
+
+    public bool Get_OnFire()
+    {
+        return skills_OnFire;
     }
 }

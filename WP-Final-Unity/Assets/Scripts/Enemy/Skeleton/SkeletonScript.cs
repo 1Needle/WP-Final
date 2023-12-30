@@ -7,6 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class SkeletonScript : Character
 {
+    //luckofdraws test
+    public override void Fire_Hurt(float damage, float last_time)
+    {
+        //HIHI
+    }
+
     // components
     Rigidbody rb;
     Animator animator;
