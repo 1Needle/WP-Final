@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -179,23 +180,25 @@ public class PlayerController : MonoBehaviour
 
     private bool skills_OnFire_IsCD = false;
     private float Skills_OnFire_timer = 0f;  // �p�ɾ��ܼ�
-    private float Skills_OnFire_duration = 5f;  // �p�ɪ��`�ɶ�
+    private float Skills_OnFire_duration = 10f;  // �p�ɪ��`�ɶ�
     private void Skilling_Skills_OnFire()
     {
         // ��s�p�ɾ�
         Skills_OnFire_timer += Time.deltaTime;
+        playerData.Receive_dmg("OnFire");
 
         // �ˬd�O�_�W�L�F���w���ɶ�
         if (Skills_OnFire_timer >= Skills_OnFire_duration)
         {
             skills_OnFire = false;
+            playerData.Receive_dmg("Stop_OnFire");
 
             // ���m�p�ɾ�
             Skills_OnFire_timer = 0f;
         }
     }
     private float CD_Skills_OnFire_timer = 0f;  // �p�ɾ��ܼ�
-    private float CD_Skills_OnFire_duration = 20f-5f;  // �p�ɪ��`�ɶ�
+    private float CD_Skills_OnFire_duration = 30f-10f;  // �p�ɪ��`�ɶ�
     private void CoolDown_Skills_OnFire()
     {
         // ��s�p�ɾ�
@@ -367,6 +370,7 @@ public class PlayerController : MonoBehaviour
             playerData.Receive_dmg("OnFire");
             skills_OnFire = true;
             skills_OnFire_IsCD = true;
+            audioController.Receive_Audio_Skill("OnFire");
         }
         
 
@@ -375,6 +379,7 @@ public class PlayerController : MonoBehaviour
         {
             skills_OnHeal = true;
             skills_OnHeal_IsCD = true;
+            audioController.Receive_Audio_Skill("OnHeal");
         }
 
         //EasterEggs

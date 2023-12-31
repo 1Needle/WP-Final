@@ -20,7 +20,7 @@ public class PlayerData : Character
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"hp: {hp}");
+        Debug.Log($"Player hp: {hp}");
 
         if (hp <= 0)
         {
@@ -82,6 +82,8 @@ public class PlayerData : Character
             audioController.Receive_Audio_Defending_GetHit();
             return;
         }
+
+        Debug.Log($"Enemy->Player: {damage}");
 
         playerController.Receive_Gethit(true);
         hp -= damage;

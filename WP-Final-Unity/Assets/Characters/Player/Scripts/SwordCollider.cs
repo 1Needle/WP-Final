@@ -55,6 +55,7 @@ public class SwordCollider : MonoBehaviour
             }
             else
             {
+                Debug.Log($"Player->Enemy: {dmg}");
                 character.Hurt(dmg);
             }
 

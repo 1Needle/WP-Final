@@ -11,11 +11,19 @@ public class AudioController : MonoBehaviour
     [SerializeField] AudioSource GetHit_audioSource;
     [SerializeField] AudioSource Defending_GetHit_audioSource;
 
+    [SerializeField] AudioSource Skill_OnFire_audioSource;
+    [SerializeField] AudioSource Skill_OnHeal_audioSource;
+
     [SerializeField] AudioClip Walk;
     [SerializeField] AudioClip Run;
     [SerializeField] AudioClip Hit;
     [SerializeField] AudioClip GetHit;
+    [SerializeField] AudioClip GetHit_DangDang;
     [SerializeField] AudioClip Defending_GetHit;
+
+    [SerializeField] AudioClip Skill_OnFire;
+    [SerializeField] AudioClip Skill_OnHeal;
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +94,17 @@ public class AudioController : MonoBehaviour
     public void Receive_Audio_GetHit()
     {
         GetHit_audioSource.volume = 0.5f;
-        GetHit_audioSource.clip = GetHit;
+
+        int randomInt = Random.Range(1, 9);
+        if(randomInt == 1 && Skill_OnFire_audioSource.isPlaying == false && Skill_OnHeal_audioSource.isPlaying == false)
+        {
+            GetHit_audioSource.clip = GetHit_DangDang;
+        }
+        else
+        {
+            GetHit_audioSource.clip = GetHit;
+        }
+
         GetHit_audioSource.Play();
     }
 
@@ -95,5 +113,25 @@ public class AudioController : MonoBehaviour
         Defending_GetHit_audioSource.volume = 0.5f;
         Defending_GetHit_audioSource.clip = Defending_GetHit;
         Defending_GetHit_audioSource.Play();
+    }
+
+    public void Receive_Audio_Skill(string skill)
+    {
+        if (skill == "OnFire")
+        {
+            Skill_OnFire_audioSource.volume = 0.4f;
+            Skill_OnFire_audioSource.clip = Skill_OnFire;
+
+            Skill_OnFire_audioSource.Play();
+            Skill_OnHeal_audioSource.Stop();
+        }
+        else
+        {
+            Skill_OnHeal_audioSource.volume = 0.4f;
+            Skill_OnHeal_audioSource.clip = Skill_OnHeal;
+
+            Skill_OnFire_audioSource.Stop();
+            Skill_OnHeal_audioSource.Play();
+        }
     }
 }
