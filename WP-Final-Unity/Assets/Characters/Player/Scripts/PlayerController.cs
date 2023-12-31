@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform Particle_SwordFire;
+    [SerializeField] Transform Particle_Buff;
     [SerializeField] Transform Particle_OnHeal;
     [SerializeField] Transform Particle_EasterEggs_Rocket;
 
@@ -472,10 +473,12 @@ public class PlayerController : MonoBehaviour
         if (skills_OnFire == true)
         {
             Particle_SwordFire.gameObject.SetActive(true);
+            Particle_Buff.gameObject.SetActive(true);
         }
         else
         {
             Particle_SwordFire.gameObject.SetActive(false);
+            Particle_Buff.gameObject.SetActive(false);
         }
 
         //OnHeal
