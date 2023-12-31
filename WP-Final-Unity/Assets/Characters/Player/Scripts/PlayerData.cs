@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerData : Character
 {
     [SerializeField] PlayerController playerController;
     [SerializeField] AudioController audioController;
+
+    [SerializeField] RawImage rawImage60;
+    [SerializeField] RawImage rawImage30;
 
     private float hp = 100f;
     private float dmg = 15f;
@@ -15,6 +19,8 @@ public class PlayerData : Character
     void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
+        rawImage30.enabled = false;
+        rawImage60.enabled = false;
     }
 
     // Update is called once per frame
@@ -30,6 +36,24 @@ public class PlayerData : Character
         {
             Fire_FullLastTime();
             Fire_secdmg();
+        }
+
+        if (hp <= 60 && hp >= 30)
+        {
+            rawImage60.enabled = true;
+
+            rawImage30.enabled = false;
+        }
+        else if (hp <= 30)
+        {
+            rawImage30.enabled = true;
+
+            rawImage60.enabled = false;
+        }
+        else
+        {
+            rawImage30.enabled = false;
+            rawImage60.enabled = false;
         }
     }
 

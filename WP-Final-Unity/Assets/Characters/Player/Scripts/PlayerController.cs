@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -46,6 +47,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerData playerData;
     private bool Global_Gethit = false;
 
+    [SerializeField] TextMeshProUGUI textMeshPro_OnFire;
+    [SerializeField] TextMeshProUGUI textMeshPro_OnHeal;
+
     /*//Audio
     private bool audio_Walk;
     private bool audio_Hit = false;
@@ -58,6 +62,9 @@ public class PlayerController : MonoBehaviour
         characterController = transform.GetComponent<CharacterController>();
         animator = transform.GetComponent<Animator>();
         playerData = transform.GetComponent<PlayerData>();
+
+        textMeshPro_OnFire.text = "";
+        textMeshPro_OnHeal.text = "";
     }
 
     // Update is called once per frame
@@ -199,16 +206,18 @@ public class PlayerController : MonoBehaviour
         }
     }
     private float CD_Skills_OnFire_timer = 0f;  // �p�ɾ��ܼ�
-    private float CD_Skills_OnFire_duration = 30f-10f;  // �p�ɪ��`�ɶ�
+    private float CD_Skills_OnFire_duration = 30f - 10f;  // �p�ɪ��`�ɶ�
     private void CoolDown_Skills_OnFire()
     {
         // ��s�p�ɾ�
         CD_Skills_OnFire_timer += Time.deltaTime;
+        textMeshPro_OnFire.text = $"{30 - 10 - (int)CD_Skills_OnFire_timer}"; 
 
         // �ˬd�O�_�W�L�F���w���ɶ�
         if (CD_Skills_OnFire_timer >= CD_Skills_OnFire_duration)
         {
             skills_OnFire_IsCD = false;
+            textMeshPro_OnFire.text = "";
 
             // ���m�p�ɾ�
             CD_Skills_OnFire_timer = 0f;
@@ -240,11 +249,13 @@ public class PlayerController : MonoBehaviour
     {
         // ��s�p�ɾ�
         CD_Skills_OnHeal_timer += Time.deltaTime;
+        textMeshPro_OnHeal.text = $"{30 - 10 - (int)CD_Skills_OnHeal_timer}";
 
         // �ˬd�O�_�W�L�F���w���ɶ�
         if (CD_Skills_OnHeal_timer >= CD_Skills_OnHeal_duration)
         {
             skills_OnHeal_IsCD = false;
+            textMeshPro_OnHeal.text = "";
 
             // ���m�p�ɾ�
             CD_Skills_OnHeal_timer = 0f;
