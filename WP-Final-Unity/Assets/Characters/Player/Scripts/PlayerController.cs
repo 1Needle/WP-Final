@@ -109,140 +109,140 @@ public class PlayerController : MonoBehaviour
         ParticleControl();
     }
 
-    private float Attack_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Attack_duration = 1f;  // ­p®ÉªºÁ`®É¶¡
+    private float Attack_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Attack_duration = 1f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_Attack()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Attack_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Attack_timer >= Attack_duration)
         {
             Attacking = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Attack_timer = 0f;
         }
     }
-    private float aniAttack_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float aniAttack_duration = 0.25f;  // ­p®ÉªºÁ`®É¶¡
+    private float aniAttack_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float aniAttack_duration = 0.25f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_aniAttack()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         aniAttack_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (aniAttack_timer >= aniAttack_duration)
         {
             attack_anictrl = 0;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             aniAttack_timer = 0f;
         }
     }
 
 
-    private float Dizzy_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Dizzy_duration = 5f;  // ­p®ÉªºÁ`®É¶¡
+    private float Dizzy_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Dizzy_duration = 5f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_Dizzy()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Dizzy_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Dizzy_timer >= Dizzy_duration)
         {
             Dizzy = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Dizzy_timer = 0f;
         }
     }
 
-    private float Gethit_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Gethit_duration = 0.3f;  // ­p®ÉªºÁ`®É¶¡
+    private float Gethit_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Gethit_duration = 0.3f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_Gethit()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Gethit_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Gethit_timer >= Gethit_duration)
         {
             Gethit = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Gethit_timer = 0f;
         }
     }
 
     private bool skills_OnFire_IsCD = false;
-    private float Skills_OnFire_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Skills_OnFire_duration = 5f;  // ­p®ÉªºÁ`®É¶¡
+    private float Skills_OnFire_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Skills_OnFire_duration = 5f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void Skilling_Skills_OnFire()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Skills_OnFire_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Skills_OnFire_timer >= Skills_OnFire_duration)
         {
             skills_OnFire = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Skills_OnFire_timer = 0f;
         }
     }
-    private float CD_Skills_OnFire_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float CD_Skills_OnFire_duration = 20f-5f;  // ­p®ÉªºÁ`®É¶¡
+    private float CD_Skills_OnFire_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float CD_Skills_OnFire_duration = 20f-5f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_Skills_OnFire()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         CD_Skills_OnFire_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (CD_Skills_OnFire_timer >= CD_Skills_OnFire_duration)
         {
             skills_OnFire_IsCD = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             CD_Skills_OnFire_timer = 0f;
         }
     }
 
     private bool skills_OnHeal_IsCD = false;
-    private float Skills_OnHeal_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Skills_OnHeal_duration = 10f;  // ­p®ÉªºÁ`®É¶¡
+    private float Skills_OnHeal_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Skills_OnHeal_duration = 10f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void Skilling_Skills_OnHeal()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Skills_OnHeal_timer += Time.deltaTime;
         playerData.Get_Heal(0.01f);
 
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Skills_OnHeal_timer >= Skills_OnHeal_duration)
         {
             skills_OnHeal = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Skills_OnHeal_timer = 0f;
         }
     }
-    private float CD_Skills_OnHeal_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float CD_Skills_OnHeal_duration = 30f - 10f;  // ­p®ÉªºÁ`®É¶¡
+    private float CD_Skills_OnHeal_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float CD_Skills_OnHeal_duration = 30f - 10f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void CoolDown_Skills_OnHeal()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         CD_Skills_OnHeal_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (CD_Skills_OnHeal_timer >= CD_Skills_OnHeal_duration)
         {
             skills_OnHeal_IsCD = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             CD_Skills_OnHeal_timer = 0f;
         }
     }

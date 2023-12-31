@@ -10,7 +10,7 @@ public class PatrollScript : MonoBehaviour
     SkeletonScript character;
     int idx, count;
     bool wait = false, patrolling = false;
-    Coroutine playingAnimation;
+    Coroutine playingAnimation = null;
     private void Start()
     {
         character = GetComponent<SkeletonScript>();
@@ -37,7 +37,8 @@ public class PatrollScript : MonoBehaviour
     }
     public void StopPatroll()
     {
-        StopCoroutine(playingAnimation);
+        if(playingAnimation != null)
+            StopCoroutine(playingAnimation);
         wait = false;
         patrolling = false;
     }

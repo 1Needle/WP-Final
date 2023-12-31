@@ -34,35 +34,35 @@ public class PlayerData : Character
     }
 
     //timer
-    private float Fire_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float Fire_duration = 1f;  // ­p®ÉªºÁ`®É¶¡
+    private float Fire_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float Fire_duration = 1f;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void Fire_secdmg()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         Fire_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (Fire_timer >= Fire_duration)
         {
             hp -= hurt_dmg;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             Fire_timer = 0f;
         }
     }
-    private float FireFLT_timer = 0f;  // ­p®É¾¹ÅÜ¼Æ
-    private float FireFLT_duration;  // ­p®ÉªºÁ`®É¶¡
+    private float FireFLT_timer = 0f;  // ï¿½pï¿½É¾ï¿½ï¿½Ü¼ï¿½
+    private float FireFLT_duration;  // ï¿½pï¿½Éªï¿½ï¿½`ï¿½É¶ï¿½
     private void Fire_FullLastTime()
     {
-        // §ó·s­p®É¾¹
+        // ï¿½ï¿½sï¿½pï¿½É¾ï¿½
         FireFLT_timer += Time.deltaTime;
 
-        // ÀË¬d¬O§_¶W¹L¤F«ü©wªº®É¶¡
+        // ï¿½Ë¬dï¿½Oï¿½_ï¿½Wï¿½Lï¿½Fï¿½ï¿½ï¿½wï¿½ï¿½ï¿½É¶ï¿½
         if (FireFLT_timer >= FireFLT_duration)
         {
             get_Firedmg = false;
 
-            // ­«¸m­p®É¾¹
+            // ï¿½ï¿½ï¿½mï¿½pï¿½É¾ï¿½
             FireFLT_timer = 0f;
             Fire_timer = 0f;
         }
