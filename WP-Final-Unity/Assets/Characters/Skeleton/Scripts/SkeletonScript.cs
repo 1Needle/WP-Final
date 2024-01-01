@@ -10,6 +10,8 @@ public class SkeletonScript : Character
 {
     // GameObjects
     [SerializeField] GameObject onFireAnimation;
+    [SerializeField] new AudioHandler audio;
+    [SerializeField] Healthbar healthbar;
     // components
     Rigidbody rb;
     Animator animator;
@@ -62,6 +64,10 @@ public class SkeletonScript : Character
                 float spawnDistance = Vector3.Distance(spawnPosition, transform.position);
                 if (speed != 0) // 移動
                 {
+                    if (speed == runSpeed)
+                        audio.Run();
+                    else if(speed == walkSpeed)
+                        audio.Walk();
                     transform.Translate(speed * Time.deltaTime * transform.forward, Space.World);
                 }
                 if(combating) // 戰鬥中
@@ -105,6 +111,8 @@ public class SkeletonScript : Character
         combating = true;
         canMove = false;
         health -= damage;
+        healthbar.UpdateHealthbar(health / maxHealth);
+        audio.Damaged();
         if (health <= 0)
         {
             Death();
@@ -165,6 +173,7 @@ public class SkeletonScript : Character
         giveUp = false;
         Stop();
         FaceDirection(player.transform.position);
+        audio.Attack();
         animator.SetTrigger("Attack");
         canMove = false;
         yield return new WaitForSeconds(attackCooldown);
@@ -194,6 +203,7 @@ public class SkeletonScript : Character
         FaceDirection(player.transform.position);
         patroll.StopPatroll();
         Stop();
+        audio.Roar();
         animator.SetTrigger("WarCry");
         yield return new WaitForSeconds(warCryAnimationTime);
         canMove = true;
@@ -205,12 +215,14 @@ public class SkeletonScript : Character
     }
     void Death()
     {
+        audio.Death();
         animator.SetTrigger("Hurt");
         animator.SetTrigger("Death");
         rb.isKinematic = true;
         collider.enabled = false;
         alive = false;
         ignited = false;
+        healthbar.Destroy();
         onFireAnimation.SetActive(false);
         playingAnimation = StartCoroutine(ClearCorpse());
     }
@@ -222,6 +234,7 @@ public class SkeletonScript : Character
             fireTimer--;
             fireDuration--;
             health -= fireDamage;
+            healthbar.UpdateHealthbar(health / maxHealth);
             if(health <= 0)
             {
                 Death();

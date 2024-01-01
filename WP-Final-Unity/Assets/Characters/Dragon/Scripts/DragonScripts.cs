@@ -27,6 +27,8 @@ public class DragonScripts : Character
     [SerializeField] ClawAttackScript clawAttackScript;
     [SerializeField] FlameAttack flameAttackScript;
     [SerializeField] MagicAttackScript magicAttackScript;
+    [SerializeField] new DragonAudioHandler audio;
+    [SerializeField] Healthbar healthbar;
 
     [Header("Stats")]
     [SerializeField] float maxHealth;
@@ -93,6 +95,7 @@ public class DragonScripts : Character
                     state = State.StandUp;
                     animator.SetBool("StandUp", true);
                 }
+                audio.Sleep();
                 break;
             case State.StandUp:
                 if(distance > detectRadius) // if player leaves detect radius, return to sleep
@@ -226,6 +229,7 @@ public class DragonScripts : Character
     void FlameAttackStart()
     {
         FaceToward(playerPos);
+        audio.FlameAttack();
         animator.SetTrigger("FlameAttack");
         flameAttackScript.StartFlame(flameAttackDamage, flameDuration);
     }
@@ -239,10 +243,12 @@ public class DragonScripts : Character
     {
         FaceToward(playerPos);
         animator.SetTrigger("Scream");
+        audio.Roar();
         magicAttackScript.StartMagicAttack(magicAttackDamage);
     }
     void MagicAttack1()
     {
+        audio.MagicAttack();
         Vector3[] pos = new Vector3[magicCount];
         for (int i = 0; i < magicCount; i++)
         {
@@ -282,6 +288,7 @@ public class DragonScripts : Character
     void ClawAttackStart()
     {
         FaceToward(playerPos);
+        audio.ClawAttack();
         animator.SetTrigger("ClawAttack");
         clawAttackScript.StartClawAttack(clawAttackDamage);
     }
@@ -294,6 +301,7 @@ public class DragonScripts : Character
     void BasicAttackStart()
     {
         FaceToward(playerPos);
+        audio.BasicAttack();
         animator.SetTrigger("BasicAttack");
         basicAttackScript.StartBasicAttack(basicAttackDamage);
     }
@@ -349,7 +357,9 @@ public class DragonScripts : Character
     // Implement Abstract Functions
     public override void Hurt(float damage)
     {
+        audio.Hurt();
         health -= damage;
+        healthbar.UpdateHealthbar(health / maxHealth);
         if(health <= 0)
         {
             Death();
@@ -397,12 +407,14 @@ public class DragonScripts : Character
     }
     void Walk()
     {
+        audio.Walk();
         animator.SetBool("Walking", true);
         speed = walkSpeed;
         Move();
     }
     void Run()
     {
+        audio.Run();
         animator.SetBool("Running", true);
         speed = runSpeed;
         Move();
@@ -413,9 +425,11 @@ public class DragonScripts : Character
     }
     void Death()
     {
+        audio.Death();
         animator.SetTrigger("Death");
         ignited = false;
         onFireAnimation.SetActive(false);
+        healthbar.Destroy();
         state = State.Dead;
     }
     void FireDOT()
