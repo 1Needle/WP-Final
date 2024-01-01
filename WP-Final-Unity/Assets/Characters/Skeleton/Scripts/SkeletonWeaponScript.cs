@@ -7,20 +7,18 @@ public class SkeletonWeaponScript : MonoBehaviour
     [SerializeField] Collider hitbox;
     [SerializeField] GameObject hitAnimation;
     [SerializeField] float damage;
-    GameObject player;
-    Character character;
+    Character player;
     SkeletonScript skeleton;
     // Start is called before the first frame update
     void Start()
     {
         skeleton = GetComponent<SkeletonScript>();
-        player = skeleton.GetPlayer();
-        character = player.GetComponent<Character>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.transform.CompareTag("Player"))
         {
             Vector3 point1 = other.ClosestPointOnBounds(hitbox.transform.position);
             Vector3 point2 = hitbox.ClosestPointOnBounds(other.transform.position);
@@ -28,7 +26,7 @@ public class SkeletonWeaponScript : MonoBehaviour
             ParticleSystem particle = Instantiate(hitAnimation).GetComponent<ParticleSystem>();
             particle.transform.position = intersection;
             particle.Play();
-            character.Hurt(damage);
+            player.Hurt(damage);
         }
     }
 }

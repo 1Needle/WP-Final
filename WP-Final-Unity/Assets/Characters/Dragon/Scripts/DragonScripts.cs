@@ -15,11 +15,18 @@ enum State
     Wait,
     Dead
 }
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class DragonScripts : Character
 {
     [Header("Objects")]
     [SerializeField] GameObject magicAttackAnimation;
-    [SerializeField] AttackScript attackScript;
+    [SerializeField] GameObject onFireAnimation;
+    [SerializeField] BasicAttackScript basicAttackScript;
+    [SerializeField] ClawAttackScript clawAttackScript;
+    [SerializeField] FlameAttack flameAttackScript;
+    [SerializeField] MagicAttackScript magicAttackScript;
 
     [Header("Stats")]
     [SerializeField] float maxHealth;
@@ -33,13 +40,20 @@ public class DragonScripts : Character
     [SerializeField] float detectRadius;
     [SerializeField] float aggroRadius;
 
-    [Header("Attack Parameters")]
+    [Header("Basic Attack Parameters")]
     [SerializeField] float basicAttackRange;
     [SerializeField] float basicAttackDamage;
+
+    [Header("Claw Attack Parameters")]
     [SerializeField] float clawAttackRange;
     [SerializeField] float clawAttackDamage;
+
+    [Header("Flame Attack Parameters")]
     [SerializeField] float flameAttackRange;
     [SerializeField] float flameAttackDamage;
+    [SerializeField] float flameDuration;
+
+    [Header("Magic Attack Parameters")]
     [SerializeField] float magicAttackRange;
     [SerializeField] float magicAttackDamage;
     [SerializeField] float magicAttackRadius;
@@ -53,6 +67,7 @@ public class DragonScripts : Character
     Coroutine coroutine;
     float speed, health;
     float fireDamage, fireDuration, fireTimer;
+    float sideWalkDegree;
     bool ignited = false;
 
     State state;
@@ -97,8 +112,17 @@ public class DragonScripts : Character
                 {
                     state = State.SideWalking;
                     StopMoving();
-                    float random = Random.Range(2f, 5f);
+                    float random = Random.Range(2f, 5f); // determine side walk end time
                     coroutine = StartCoroutine(Interrupt(random));
+                    int direction = Random.Range(0, 2);
+                    if(direction == 0)
+                    {
+                        sideWalkDegree = Random.Range(-90f, -45f);
+                    }
+                    else if(direction == 1)
+                    {
+                        sideWalkDegree = Random.Range(45f, 90f);
+                    }
                 }
                 else if(distance < sideWalkRadius)
                 {
@@ -110,7 +134,7 @@ public class DragonScripts : Character
                 }
                 break;
             case State.SideWalking:
-                SideWalk();
+                SideWalk(sideWalkDegree);
                 if(distance < meleeCombatRange)
                 {
                     StopMoving();
@@ -203,6 +227,7 @@ public class DragonScripts : Character
     {
         FaceToward(playerPos);
         animator.SetTrigger("FlameAttack");
+        flameAttackScript.StartFlame(flameAttackDamage, flameDuration);
     }
     void FlameAttackEnd()
     {
@@ -214,6 +239,7 @@ public class DragonScripts : Character
     {
         FaceToward(playerPos);
         animator.SetTrigger("Scream");
+        magicAttackScript.StartMagicAttack(magicAttackDamage);
     }
     void MagicAttack1()
     {
@@ -257,7 +283,7 @@ public class DragonScripts : Character
     {
         FaceToward(playerPos);
         animator.SetTrigger("ClawAttack");
-        attackScript.StartAttack(clawAttackDamage);
+        clawAttackScript.StartClawAttack(clawAttackDamage);
     }
     void ClawAttackEnd()
     {
@@ -269,7 +295,7 @@ public class DragonScripts : Character
     {
         FaceToward(playerPos);
         animator.SetTrigger("BasicAttack");
-        attackScript.StartAttack(basicAttackDamage);
+        basicAttackScript.StartBasicAttack(basicAttackDamage);
     }
     void BasicAttackEnd()
     {
@@ -277,10 +303,10 @@ public class DragonScripts : Character
     }
 
     // Move Functions
-    void SideWalk()
+    void SideWalk(float degree)
     {
         Vector3 directionToPlayer = playerPos - transform.position;
-        Vector3 sideDirection = Quaternion.Euler(0, 90, 0) * directionToPlayer.normalized;
+        Vector3 sideDirection = Quaternion.Euler(0, degree, 0) * directionToPlayer.normalized;
         FaceToward(transform.position + sideDirection);
         Walk();
     }
@@ -335,6 +361,26 @@ public class DragonScripts : Character
         fireDuration = last_time;
         fireTimer = 0;
         ignited = true;
+        onFireAnimation.SetActive(true);
+    }
+
+    // Public Functions
+    public void PartDamage(float damage, string tag)
+    {
+        float multiplier = 0f;
+        if (tag == "DragonHead")
+            multiplier = 1.5f;
+        else if (tag == "DragonNeck")
+            multiplier = 1.25f;
+        else if (tag == "DragonTorso")
+            multiplier = 1f;
+        else if (tag == "DragonWing")
+            multiplier = 0.75f;
+        else if (tag == "DragonFeet")
+            multiplier = 1f;
+        else if(tag == "DragonTail")
+            multiplier = 1.25f;
+        Hurt(damage * multiplier);
     }
 
     // Private Functions
@@ -368,6 +414,8 @@ public class DragonScripts : Character
     void Death()
     {
         animator.SetTrigger("Death");
+        ignited = false;
+        onFireAnimation.SetActive(false);
         state = State.Dead;
     }
     void FireDOT()
@@ -379,7 +427,10 @@ public class DragonScripts : Character
             Hurt(fireDamage);
             fireDuration -= 1;
             if (fireDuration <= 0)
+            {
                 ignited = false;
+                onFireAnimation.SetActive(false);
+            }
         }
     }
 }

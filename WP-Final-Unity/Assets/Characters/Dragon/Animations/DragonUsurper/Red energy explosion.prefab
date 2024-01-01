@@ -3860,13 +3860,14 @@ ParticleSystem:
   TriggerModule:
     enabled: 0
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 6049286019085393236}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -39215,6 +39216,9 @@ GameObject:
   - component: {fileID: 5182820693866792781}
   - component: {fileID: 5726018809045565519}
   - component: {fileID: 6415707391935192240}
+  - component: {fileID: 1265296395373986411}
+  - component: {fileID: 9223177992474325586}
+  - component: {fileID: 6574334861599418456}
   m_Layer: 0
   m_Name: Red energy explosion
   m_TagString: Untagged
@@ -44111,6 +44115,54 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &1265296395373986411
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378648546881499446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 3.4567013
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9223177992474325586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378648546881499446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2218a87e8c2ee7c4386e67d54bc7b117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxStartTime: 2
+  hitboxDuration: 0.1
+--- !u!114 &6574334861599418456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378648546881499446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd7887f4a32844419eb51a137fedaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitAnimation: {fileID: 4535006216103734310, guid: 860ead2f0e40b174ab9882a7759e8490, type: 3}
 --- !u!1 &9098514075732951805
 GameObject:
   m_ObjectHideFlags: 0
@@ -47969,7 +48021,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 2
     inside: 0
     outside: 0

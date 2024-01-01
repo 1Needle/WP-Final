@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackScript : MonoBehaviour
+[RequireComponent(typeof(HitAnimationScript))]
+public class BasicAttackScript : MonoBehaviour
 {
-    GameObject player;
+    HitAnimationScript hitAnimationScript;
+    Character player;
     static bool attacked;
     float damage;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        hitAnimationScript = GetComponent<HitAnimationScript>();
     }
 
-    public void StartAttack(float dmg)
+    public void StartBasicAttack(float dmg)
     {
         attacked = false;
         damage = dmg;
@@ -25,7 +28,8 @@ public class AttackScript : MonoBehaviour
             if (other.CompareTag("Player"))
             {
                 attacked = true;
-                Debug.Log("hurt");
+                player.Hurt(damage);
+                hitAnimationScript.Play(other);
             }
         }
     }

@@ -40,13 +40,15 @@ public class SwordCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // ÀË¬d¸I¼²ªº¹ï¶H¬O§_¾Ö¦³«ü©wªº¼ÐÅÒ
-        if (other.CompareTag("Enemy"))
+        // ï¿½Ë¬dï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Hï¿½Oï¿½_ï¿½Ö¦ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (other.transform.root.CompareTag("Enemy"))
         {
             Debug.Log("Sword Collide with: Enemy");
 
-            // ¦b³o¸Ì°õ¦æ»P¸I¼²¹ï¶H¬ÛÃöªº¾Þ§@
+            // ï¿½bï¿½oï¿½Ì°ï¿½ï¿½ï¿½Pï¿½Iï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ§@
             character = other.GetComponent<Character>();
+            if (character == null)
+                character = other.GetComponentInParent<Character>();
             float dmg = playerData.Get_dmg();
 
             if(playerController.Get_OnFire() == true)
@@ -56,7 +58,15 @@ public class SwordCollider : MonoBehaviour
             else
             {
                 Debug.Log($"Player->Enemy: {dmg}");
-                character.Hurt(dmg);
+                if(character.name == "Dragon")
+                {
+                    DragonScripts dragonScript = character.GetComponent<DragonScripts>();
+                    dragonScript.PartDamage(dmg, other.tag);
+                }
+                else
+                {
+                    character.Hurt(dmg);
+                }
             }
 
             //close collider to avoid multi-collision

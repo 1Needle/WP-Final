@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Animator))]
 public class SkeletonScript : Character
 {
-    //luckofdraws test
-    public override void Fire_Hurt(float damage, float last_time)
-    {
-        //HIHI
-    }
-
+    // GameObjects
+    [SerializeField] GameObject onFireAnimation;
     // components
     Rigidbody rb;
     Animator animator;
@@ -36,7 +33,8 @@ public class SkeletonScript : Character
     float health;
     Vector3 spawnPosition;
     float speed = 0;
-    bool alive = true, canMove = true, giveUp = false, combating = false;
+    float fireDamage, fireDuration, fireTimer;
+    bool alive = true, canMove = true, giveUp = false, combating = false, ignited = false;
     Coroutine playingAnimation;
 
     // main logics
@@ -48,12 +46,17 @@ public class SkeletonScript : Character
         patroll = GetComponent<PatrollScript>();
         player = GameObject.FindGameObjectWithTag("Player");
         spawnPosition = transform.position;
+        health = maxHealth;
     }
     private void Update()
     {
         if (alive)
         {
-            if(canMove)
+            if (ignited)
+            {
+                FireDOT();
+            }
+            if (canMove)
             {
                 float playerDistance = Vector3.Distance(player.transform.position, transform.position);
                 float spawnDistance = Vector3.Distance(spawnPosition, transform.position);
@@ -110,6 +113,14 @@ public class SkeletonScript : Character
         {
             playingAnimation = StartCoroutine(HurtAnimation());
         }
+    }
+    public override void Fire_Hurt(float damage, float last_time)
+    {
+        fireDamage = damage;
+        fireDuration = last_time;
+        fireTimer = 0;
+        ignited = true;
+        onFireAnimation.SetActive(ignited);
     }
     IEnumerator HurtAnimation()
     {
@@ -199,7 +210,28 @@ public class SkeletonScript : Character
         rb.isKinematic = true;
         collider.enabled = false;
         alive = false;
+        ignited = false;
+        onFireAnimation.SetActive(false);
         playingAnimation = StartCoroutine(ClearCorpse());
+    }
+    void FireDOT()
+    {
+        fireTimer += Time.deltaTime;
+        if(fireTimer >= 1)
+        {
+            fireTimer--;
+            fireDuration--;
+            health -= fireDamage;
+            if(health <= 0)
+            {
+                Death();
+            }
+            else if(fireDuration <= 0)
+            {
+                ignited = false;
+                onFireAnimation.SetActive(false);
+            }
+        }
     }
     IEnumerator ClearCorpse()
     {
