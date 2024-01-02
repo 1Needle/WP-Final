@@ -1536,6 +1536,7 @@ GameObject:
   - component: {fileID: 9586004}
   - component: {fileID: 1047572677328117922}
   - component: {fileID: 4107503086318429362}
+  - component: {fileID: 2316808873396073313}
   m_Layer: 3
   m_Name: Dragon
   m_TagString: Enemy
@@ -1651,6 +1652,27 @@ MonoBehaviour:
   magicAttackRadius: 20
   magicRadius: 2.5
   magicCount: 10
+--- !u!65 &2316808873396073313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139696}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.988808, y: 5.443912, z: 15.800602}
+  m_Center: {x: 0.1785036, y: 2.7583246, z: -0.97293293}
 --- !u!1 &139704
 GameObject:
   m_ObjectHideFlags: 0
