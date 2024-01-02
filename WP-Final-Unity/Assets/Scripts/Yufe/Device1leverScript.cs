@@ -9,8 +9,10 @@ public class Device1leverScript : MonoBehaviour
     public Transform player;
     public Canvas dialogueCanvas;
     public TextMeshProUGUI dialogueText;
-    private string npcDialogue;
     public Transform lever;
+    public LastDoorControllerScript lastDoorControllerScript;
+
+    private string npcDialogue;
     private bool Actived = false;
     private float InteractDistance = 6f;
 
@@ -36,6 +38,7 @@ public class Device1leverScript : MonoBehaviour
                 Actived = true;
                 npcDialogue = "Device Active";
                 dialogueText.text = npcDialogue;
+                lastDoorControllerScript.DeviceActived();
 
                 // rotate lever
                 Vector3 rotationAxis = Vector3.right;

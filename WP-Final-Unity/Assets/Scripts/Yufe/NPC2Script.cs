@@ -9,11 +9,17 @@ public class NPC2Script : MonoBehaviour
     public Transform player;
     public Canvas dialogueCanvas;
     public TextMeshProUGUI dialogueText;
-    private string npcDialogue;
+    public Transform BossTrapDoor;
     public Door1Script Door1;
     public Door2Script Door2;
+    public GameObject Boss;
+
+    private string npcDialogue;
     private float ChatCount = 0f;
     private bool ActivePlate = false;
+    private bool BossSpawning = false;
+    private float OpenBossDoorCount = 0f;
+    
 
     private void Start()
     {
@@ -39,7 +45,20 @@ public class NPC2Script : MonoBehaviour
                 ActivePlate = false;
                 npcDialogue = "That Also Spawn The Boss...";
                 dialogueText.text = npcDialogue;
-                // SpawnBoss();
+                SpawnBoss();
+            }
+        }
+
+        if(BossSpawning)
+        {
+            float distanceToMove = -2f * Time.deltaTime;
+            BossTrapDoor.Translate(Vector3.right * distanceToMove);
+
+            OpenBossDoorCount += Time.deltaTime;
+            if(OpenBossDoorCount > 5f)
+            {
+                BossSpawning = false;
+                Boss.SetActive(true);
             }
         }
 
@@ -51,5 +70,10 @@ public class NPC2Script : MonoBehaviour
         dialogueText.text = npcDialogue;
         Door1.Open();
         Door2.Open();
+    }
+
+    private void SpawnBoss()
+    {
+        BossSpawning = true;
     }
 }
