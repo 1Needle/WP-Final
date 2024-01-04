@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPC2Controller : MonoBehaviour
 {
     private int KilledEnemycount = 0;
-    [SerializeField] int EnemyAmount = 28; // total amount in Clear Room
+    [SerializeField] int EnemyAmount = 5; // total amount in Clear Room
 
     public GameObject NPC2;
 
