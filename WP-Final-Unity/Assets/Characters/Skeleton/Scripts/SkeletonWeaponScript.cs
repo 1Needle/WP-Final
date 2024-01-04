@@ -8,11 +8,9 @@ public class SkeletonWeaponScript : MonoBehaviour
     [SerializeField] GameObject hitAnimation;
     [SerializeField] float damage;
     Character player;
-    SkeletonScript skeleton;
     // Start is called before the first frame update
     void Start()
     {
-        skeleton = GetComponent<SkeletonScript>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
     }
 

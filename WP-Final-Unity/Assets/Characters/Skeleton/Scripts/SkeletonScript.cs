@@ -11,7 +11,8 @@ public class SkeletonScript : Character
     // GameObjects
     [SerializeField] GameObject onFireAnimation;
     [SerializeField] new AudioHandler audio;
-    [SerializeField] Healthbar healthbar;
+    [SerializeField] Healthbar healthbar; 
+    [SerializeField] NPC2Controller nPC2Controller;
     // components
     Rigidbody rb;
     Animator animator;
@@ -215,6 +216,7 @@ public class SkeletonScript : Character
     }
     void Death()
     {
+        nPC2Controller.EnemyDied();
         audio.Death();
         animator.SetTrigger("Hurt");
         animator.SetTrigger("Death");
