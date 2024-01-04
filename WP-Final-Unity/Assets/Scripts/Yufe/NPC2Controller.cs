@@ -28,3 +28,4 @@ public class NPC2Controller : MonoBehaviour
 //To call
 //public NPC2Controller nPC2Controller;
 //nPC2Controller.EnemyDied();
+
