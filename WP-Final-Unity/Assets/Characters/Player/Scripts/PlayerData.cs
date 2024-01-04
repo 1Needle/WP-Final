@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerData : Character
 {
+    [SerializeField] Transform Particle_Onfire;
+
     [SerializeField] PlayerController playerController;
     [SerializeField] AudioController audioController;
 
@@ -24,6 +27,9 @@ public class PlayerData : Character
         playerController = GameObject.FindObjectOfType<PlayerController>();
         rawImage30.enabled = false;
         rawImage60.enabled = false;
+        Particle_Onfire.gameObject.SetActive(false);
+
+        Fire_Hurt(1, 5);
     }
 
     private bool IsDie = false;
@@ -94,6 +100,7 @@ public class PlayerData : Character
         if (FireFLT_timer >= FireFLT_duration)
         {
             get_Firedmg = false;
+            Particle_Onfire.gameObject.SetActive(false);
 
             // ���m�p�ɾ�
             FireFLT_timer = 0f;
@@ -131,6 +138,8 @@ public class PlayerData : Character
 
         FireFLT_duration = last_time;
         hurt_dmg = damage;
+
+        Particle_Onfire.gameObject.SetActive(true);
     }
 
     public void PlayerIsDizzy(float get_damage)

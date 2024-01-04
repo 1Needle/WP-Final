@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform Particle_EasterEggs_Rocket;
     [SerializeField] GameObject GameObject_Skill_Explosion;
     [SerializeField] Transform Particle_EX_Ready;
+    [SerializeField] Transform Particle_Dizzy;
 
     [SerializeField] SkillExplosion skillExplosion;
 
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float speed = 3f;
     [SerializeField] float gravity = -19.8f;
-    [SerializeField] float jumpHeight = 4f;
+    [SerializeField] float jumpHeight = 2f;
     [SerializeField] float rotationSpeed = 4f;
 
     private Animator animator;
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Die == true)
+        if (Die == true)
         {
             AnimatorControl();
             return;
@@ -392,11 +393,8 @@ public class PlayerController : MonoBehaviour
             Defending = false;
         }
 
-
-
-
         //Gethit
-        if(Global_Gethit == true)
+        if (Global_Gethit == true)
         {
             Gethit = true;
             Global_Gethit = false;
@@ -405,6 +403,7 @@ public class PlayerController : MonoBehaviour
 
 
 
+        
 
         //Skills
         //OnFire
@@ -562,6 +561,16 @@ public class PlayerController : MonoBehaviour
         else
         {
             Particle_EasterEggs_Rocket.gameObject.SetActive(false);
+        }
+
+        //Dizzy
+        if(Dizzy == true)
+        {
+            Particle_Dizzy.gameObject.SetActive(true);
+        }
+        else
+        {
+            Particle_Dizzy.gameObject.SetActive(false);
         }
     }
 
