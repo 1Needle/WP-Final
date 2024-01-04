@@ -6,6 +6,7 @@ public class NPC2Controller : MonoBehaviour
 {
     private int KilledEnemycount = 0;
     [SerializeField] int EnemyAmount = 5; // total amount in Clear Room
+    [SerializeField] GameHandler gameHandler;
 
     public GameObject NPC2;
 
@@ -20,6 +21,7 @@ public class NPC2Controller : MonoBehaviour
     public void EnemyDied()
     {
         KilledEnemycount++;
+        gameHandler.OneKill();
     }
 }
 
