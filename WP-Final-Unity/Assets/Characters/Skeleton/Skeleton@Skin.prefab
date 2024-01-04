@@ -1283,12 +1283,12 @@ MonoBehaviour:
   maxHealth: 100
   walkSpeed: 3
   runSpeed: 5
-  detectRadius: 5
+  detectRadius: 60
   attackRadius: 1
-  aggroRadius: 15
-  activityRange: 30
+  aggroRadius: 80
+  activityRange: 100
   attackCooldown: 3
-  clearCorpseTime: 60
+  clearCorpseTime: 30
   lookAroundAnimationTime: 6
   warCryAnimationTime: 1.5
   hurtAnimationTime: 1
