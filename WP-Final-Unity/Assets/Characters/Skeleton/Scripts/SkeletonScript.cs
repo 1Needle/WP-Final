@@ -12,13 +12,13 @@ public class SkeletonScript : Character
     [SerializeField] GameObject onFireAnimation;
     [SerializeField] new AudioHandler audio;
     [SerializeField] Healthbar healthbar; 
-    [SerializeField] NPC2Controller nPC2Controller;
     // components
     Rigidbody rb;
     Animator animator;
     new Collider collider;
     GameObject player;
     PatrollScript patroll;
+    NPC2Controller nPC2Controller;
     // configurable variables
     [SerializeField] float maxHealth;
     [SerializeField] float walkSpeed;
@@ -47,6 +47,7 @@ public class SkeletonScript : Character
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
         patroll = GetComponent<PatrollScript>();
+        nPC2Controller = GameObject.FindGameObjectWithTag("NPC2").GetComponent<NPC2Controller>();
         player = GameObject.FindGameObjectWithTag("Player");
         spawnPosition = transform.position;
         health = maxHealth;
