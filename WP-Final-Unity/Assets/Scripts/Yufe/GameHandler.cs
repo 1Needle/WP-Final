@@ -44,14 +44,17 @@ public class GameHandler : MonoBehaviour
 
     public void GameFinised(bool WIN)
     {
+        Debug.Log("GameFinished");
+
         if (GameEnd == true) return;
 
         GameEnd = true;
+        WarpPlayer=true;
 
         PlayTime.text = "Your PlayTime: " + PlayTimeCount/3600 + " : " + (PlayTimeCount % 3600) / 60 + " : " + PlayTimeCount % 60;
         EnemyKilled.text = "Enemy Killed: " + EnemyKilledCount;
 
-        if (WIN == false)
+        if (WIN == true)
             W_L.text = "You Win :)";
         else
             W_L.text = "You Lose :( ";
