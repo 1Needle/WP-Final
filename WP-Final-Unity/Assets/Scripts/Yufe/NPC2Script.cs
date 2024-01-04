@@ -43,7 +43,7 @@ public class NPC2Script : MonoBehaviour
             if (ChatCount > 5f)
             {
                 ActivePlate = false;
-                npcDialogue = "That Also Spawn The Boss...";
+                npcDialogue = "That Also Spawn More Enemys...";
                 dialogueText.text = npcDialogue;
                 SpawnBoss();
             }
@@ -52,7 +52,7 @@ public class NPC2Script : MonoBehaviour
         if(BossSpawning)
         {
             float distanceToMove = -2f * Time.deltaTime;
-            BossTrapDoor.Translate(Vector3.right * distanceToMove);
+            //BossTrapDoor.Translate(Vector3.right * distanceToMove);       //This was made for dragon 
 
             OpenBossDoorCount += Time.deltaTime;
             if(OpenBossDoorCount > 5f)
