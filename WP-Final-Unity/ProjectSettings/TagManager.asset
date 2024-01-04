@@ -11,6 +11,7 @@ TagManager:
   - DragonWing
   - DragonFeet
   - DragonNeck
+  - NPC2
   layers:
   - Default
   - TransparentFX
