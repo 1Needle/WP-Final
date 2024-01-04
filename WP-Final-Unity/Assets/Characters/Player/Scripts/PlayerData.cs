@@ -11,6 +11,8 @@ public class PlayerData : Character
     [SerializeField] RawImage rawImage60;
     [SerializeField] RawImage rawImage30;
 
+    [SerializeField] GameHandler gameHandler;
+
     private float hp = 100f;
     private float dmg = 15f;
     private float fire_dmg = 10f;
@@ -24,6 +26,7 @@ public class PlayerData : Character
         rawImage60.enabled = false;
     }
 
+    private bool IsDie = false;
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +34,12 @@ public class PlayerData : Character
 
         if (hp <= 0)
         {
-            Die();
+            if (IsDie == false)
+            {
+                Die();
+                IsDie = true;
+            }
+            return;
         }
         if(get_Firedmg == true)
         {
@@ -98,6 +106,8 @@ public class PlayerData : Character
     private void Die()
     {
         playerController.Receive_Die(true);
+
+        gameHandler.GameFinised(false);
     }
 
     public override void Hurt(float damage)
