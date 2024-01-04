@@ -70,7 +70,7 @@ public class DragonScripts : Character
     float speed, health;
     float fireDamage, fireDuration, fireTimer;
     float sideWalkDegree;
-    bool ignited = false;
+    bool ignited = false, invincible = false;
 
     State state;
     // Start is called before the first frame update
@@ -357,12 +357,17 @@ public class DragonScripts : Character
     // Implement Abstract Functions
     public override void Hurt(float damage)
     {
-        audio.Hurt();
-        health -= damage;
-        healthbar.UpdateHealthbar(health / maxHealth);
-        if(health <= 0)
+        if(!invincible)
         {
-            Death();
+            invincible = true;
+            Invoke(nameof(DisableInvincible), 0.1f);
+            audio.Hurt();
+            health -= damage;
+            healthbar.UpdateHealthbar(health / maxHealth);
+            if (health <= 0)
+            {
+                Death();
+            }
         }
     }
     public override void Fire_Hurt(float damage, float last_time)
@@ -446,5 +451,9 @@ public class DragonScripts : Character
                 onFireAnimation.SetActive(false);
             }
         }
+    }
+    void DisableInvincible()
+    {
+        invincible = false;
     }
 }
