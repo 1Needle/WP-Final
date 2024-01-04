@@ -142,6 +142,12 @@ public class SwordCollider : MonoBehaviour
                     character.Hurt(dmg);
                 }
 
+            float left_explosion_CD = playerController.Get_Skills_Explosion_leftCD();
+            if (left_explosion_CD > 0)
+            {
+                float rndnum = Random.Range(0.0f, 5.0f);
+                playerController.Receive_Skills_Explosion_minus_CD(rndnum);
+            }
 
             
             Instantiate(Particle_StarHit, This.position, Quaternion.identity);

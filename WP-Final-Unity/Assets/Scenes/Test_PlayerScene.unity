@@ -662,6 +662,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442863406}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &448373394 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 290153874908311343, guid: 5da03043edfd8b9449ab8956afcfecc3, type: 3}
+  m_PrefabInstance: {fileID: 7174930372474673086}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &458369562 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3406723073245590368, guid: 5da03043edfd8b9449ab8956afcfecc3, type: 3}
@@ -818,6 +829,10 @@ PrefabInstance:
       propertyPath: textMeshPro_OnHeal
       value: 
       objectReference: {fileID: 458369562}
+    - target: {fileID: 1199927978627971708, guid: 4770ef8429bf8804ea8ff3474c9b5a89, type: 3}
+      propertyPath: textMeshPro_Explosion
+      value: 
+      objectReference: {fileID: 448373394}
     - target: {fileID: 2392517589221943398, guid: 4770ef8429bf8804ea8ff3474c9b5a89, type: 3}
       propertyPath: m_Name
       value: Player

@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform Particle_Buff;
     [SerializeField] Transform Particle_OnHeal;
     [SerializeField] Transform Particle_EasterEggs_Rocket;
+    [SerializeField] GameObject GameObject_Skill_Explosion;
+    [SerializeField] Transform Particle_EX_Ready;
+
+    [SerializeField] SkillExplosion skillExplosion;
 
     [SerializeField] AudioController audioController;
 
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
     //Skills
     private bool skills_OnFire = false;
     private bool skills_OnHeal = false;
+    private bool skills_Explosion_OK = true;
+    private bool skills_Explosion_IsCD = false;
 
     private bool EasterEggs_Rocket = false;
 
@@ -49,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI textMeshPro_OnFire;
     [SerializeField] TextMeshProUGUI textMeshPro_OnHeal;
+    [SerializeField] TextMeshProUGUI textMeshPro_Explosion;
 
     /*//Audio
     private bool audio_Walk;
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
         textMeshPro_OnFire.text = "";
         textMeshPro_OnHeal.text = "";
+        textMeshPro_Explosion.text = "";
     }
 
     // Update is called once per frame
@@ -110,6 +118,10 @@ public class PlayerController : MonoBehaviour
         {
 
             CoolDown_Skills_OnHeal();
+        }
+        if(skills_Explosion_IsCD == true)
+        {
+            CoolDown_Skills_Explosion();
         }
 
 
@@ -262,6 +274,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private float CD_Skills_Explosion_timer = 0f;  // �p�ɾ��ܼ�
+    private float CD_Skills_Explosion_duration = 60f;  // �p�ɪ��`�ɶ�
+    private void CoolDown_Skills_Explosion()
+    {
+        // ��s�p�ɾ�
+        CD_Skills_Explosion_timer += Time.deltaTime;
+        textMeshPro_Explosion.text = $"{60 - (int)CD_Skills_Explosion_timer}";
+
+        // �ˬd�O�_�W�L�F���w���ɶ�
+        if (CD_Skills_Explosion_timer >= CD_Skills_Explosion_duration)
+        {
+            skills_Explosion_IsCD = false;
+            textMeshPro_Explosion.text = "";
+
+            // ���m�p�ɾ�
+            CD_Skills_Explosion_timer = 0f;
+        }
+    }
+
 
 
 
@@ -394,6 +425,17 @@ public class PlayerController : MonoBehaviour
             audioController.Receive_Audio_Skill("OnHeal");
         }
 
+        if(Input.GetKeyDown(KeyCode.Alpha3) && skills_Explosion_OK == true)
+        {
+            Instantiate(GameObject_Skill_Explosion, transform.position, transform.rotation);
+            skillExplosion.Set_Exist();
+
+            skills_Explosion_OK = false;
+            skills_Explosion_IsCD = true;
+
+            audioController.Receive_Audio_Skill("Explosion");
+        }
+
         //EasterEggs
         if(Input.GetKeyDown(KeyCode.P))
         {
@@ -502,6 +544,16 @@ public class PlayerController : MonoBehaviour
             Particle_OnHeal.gameObject.SetActive(false);
         }
 
+        //Explotion
+        if (skills_Explosion_OK == true)
+        {
+            Particle_EX_Ready.gameObject.SetActive(true);
+        }
+        else
+        {
+            Particle_EX_Ready.gameObject.SetActive(false);
+        }
+
         //Rocket
         if (EasterEggs_Rocket == true)
         {
@@ -574,5 +626,15 @@ public class PlayerController : MonoBehaviour
     public bool Get_OnFire()
     {
         return skills_OnFire;
+    }
+
+    public float Get_Skills_Explosion_leftCD()
+    {
+        return CD_Skills_Explosion_duration - CD_Skills_Explosion_timer;
+    }
+
+    public void Receive_Skills_Explosion_minus_CD(float minus_cd)
+    {
+        CD_Skills_Explosion_timer += minus_cd;
     }
 }

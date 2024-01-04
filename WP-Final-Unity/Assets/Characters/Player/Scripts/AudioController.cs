@@ -13,6 +13,8 @@ public class AudioController : MonoBehaviour
 
     [SerializeField] AudioSource Skill_OnFire_audioSource;
     [SerializeField] AudioSource Skill_OnHeal_audioSource;
+    [SerializeField] AudioSource Skill_Explosion_audioSource;
+    [SerializeField] AudioSource Skill_Explosion_soundEF_audioSource;
 
     [SerializeField] AudioClip Walk;
     [SerializeField] AudioClip Run;
@@ -23,6 +25,8 @@ public class AudioController : MonoBehaviour
 
     [SerializeField] AudioClip Skill_OnFire;
     [SerializeField] AudioClip Skill_OnHeal;
+    [SerializeField] AudioClip Skill_Explosion;
+    [SerializeField] AudioClip Skill_Explosion_soundEF;
 
 
     // Start is called before the first frame update
@@ -125,13 +129,27 @@ public class AudioController : MonoBehaviour
             Skill_OnFire_audioSource.Play();
             Skill_OnHeal_audioSource.Stop();
         }
-        else
+        else if (skill == "OnHeal")
         {
             Skill_OnHeal_audioSource.volume = 0.4f;
             Skill_OnHeal_audioSource.clip = Skill_OnHeal;
 
             Skill_OnFire_audioSource.Stop();
             Skill_OnHeal_audioSource.Play();
+        }
+        else
+        {
+            Skill_Explosion_audioSource.volume = 0.4f;
+            Skill_Explosion_audioSource.clip = Skill_Explosion;
+
+            Skill_Explosion_soundEF_audioSource.volume = 0.4f;
+            Skill_Explosion_soundEF_audioSource.clip = Skill_Explosion_soundEF;
+
+            Skill_OnFire_audioSource.Stop();
+            Skill_OnHeal_audioSource.Stop();
+
+            Skill_Explosion_audioSource.Play();
+            Skill_Explosion_soundEF_audioSource.Play();
         }
     }
 }
