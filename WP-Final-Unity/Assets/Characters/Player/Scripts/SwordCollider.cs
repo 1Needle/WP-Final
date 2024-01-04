@@ -28,6 +28,7 @@ public class SwordCollider : MonoBehaviour
         if(Attacking == false)
         {
             SwordCollision = false;
+            capsuleCollider.enabled = false;
         }
         if(Attacking == true && SwordCollision == false)
         {
@@ -43,21 +44,21 @@ public class SwordCollider : MonoBehaviour
         // �ˬd�I������H�O�_�֦����w������
         if (other.transform.root.CompareTag("Enemy"))
         {
-            Debug.Log("Sword Collide with: Enemy");
+            //Debug.Log("Sword Collide with: Enemy");
 
             // �b�o�̰���P�I����H�������ާ@
             character = other.GetComponent<Character>();
             if (character == null)
                 character = other.GetComponentInParent<Character>();
             float dmg = playerData.Get_dmg();
+            float Fire_dmg = playerData.Get_Fire_dmg();
 
-            if(playerController.Get_OnFire() == true)
+            if (playerController.Get_OnFire() == true)
             {
                 character.Fire_Hurt(dmg, 3);
             }
-            else
-            {
-                Debug.Log($"Player->Enemy: {dmg}");
+
+                //Debug.Log($"Player->Enemy: {dmg}");
                 if(character.name == "Dragon")
                 {
                     DragonScripts dragonScript = character.GetComponent<DragonScripts>();
@@ -67,7 +68,7 @@ public class SwordCollider : MonoBehaviour
                 {
                     character.Hurt(dmg);
                 }
-            }
+            
 
             //close collider to avoid multi-collision
             capsuleCollider.enabled = false;

@@ -13,6 +13,7 @@ public class PlayerData : Character
 
     private float hp = 100f;
     private float dmg = 15f;
+    private float fire_dmg = 10f;
     float hurt_dmg = 0f;
 
     // Start is called before the first frame update
@@ -139,6 +140,12 @@ public class PlayerData : Character
     {
         return dmg;
     }
+
+    public float Get_Fire_dmg()
+    {
+        return fire_dmg;
+    }
+
     public void Receive_dmg(string receive_dmg)
     {
         if(receive_dmg == "OnFire")
