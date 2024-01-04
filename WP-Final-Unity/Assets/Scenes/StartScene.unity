@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeSceneButton: {fileID: 390013053}
-  targetSceneName: GameScene
+  targetSceneName: TestMap
 --- !u!1 &449062863
 GameObject:
   m_ObjectHideFlags: 0

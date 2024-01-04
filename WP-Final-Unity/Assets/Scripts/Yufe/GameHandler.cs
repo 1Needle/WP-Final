@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
-    [SerializeField] Transform Player;
+    [SerializeField] GameObject Player;
     [SerializeField] TextMeshProUGUI W_L;
     [SerializeField] TextMeshProUGUI PlayTime;
     [SerializeField] TextMeshProUGUI EnemyKilled;
+    [SerializeField] GameObject Ghost;
+    [SerializeField] GameObject AudioMaker1; // dragon
+    [SerializeField] GameObject AudioMaker2; // enemy
 
     private float PlayTimeCount = 0f;
     private bool GameEnd = false;
     private int EnemyKilledCount = 0;
     private bool WarpPlayer = false;
     private float WarpCount = 0f;
-    private Vector3 WarpPosition = new Vector3(95f, 2.2f, 225f);
 
-    // Update is called once per frame
     void Update()
     {
-        if(GameEnd == false)
+        
+        if (GameEnd == false)
         {
             PlayTimeCount += Time.deltaTime;
         }
@@ -32,7 +35,8 @@ public class GameHandler : MonoBehaviour
             if(WarpCount > 5f)
             {
                 WarpPlayer = false;
-                Player.transform.position = WarpPosition;
+                Player.SetActive(false);
+                Ghost.SetActive(true);
             }
         }
     }
@@ -51,14 +55,30 @@ public class GameHandler : MonoBehaviour
         GameEnd = true;
         WarpPlayer=true;
 
-        PlayTime.text = "Your PlayTime: " + PlayTimeCount/3600 + " : " + (PlayTimeCount % 3600) / 60 + " : " + PlayTimeCount % 60;
+        PlayTime.text = "PlayTime: " + (int)PlayTimeCount/3600 + " : " + ((int)PlayTimeCount % 3600) / 60 + " : " + (int)PlayTimeCount % 60;
         EnemyKilled.text = "Enemy Killed: " + EnemyKilledCount;
 
         if (WIN == true)
             W_L.text = "You Win :)";
         else
-            W_L.text = "You Lose :( ";
+            W_L.text = "You Died :( ";
+
+        //StopAllAudioSources();
+        AudioMaker1.SetActive(false);
+        AudioMaker2.SetActive(false);
+
     }
 
+    private void StopAllAudioSources()
+    {
+        // Find all active AudioSources in the scene
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+
+        // Stop each AudioSource
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.Stop();
+        }
+    }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class StartButton : MonoBehaviour
 {
     public Button changeSceneButton;
-    public string targetSceneName = "GameScene"; // Set this in the Unity Editor to the name of the scene you want to load
+    public string targetSceneName = "TestMap"; // Set this in the Unity Editor to the name of the scene you want to load
 
     void Start()
     {

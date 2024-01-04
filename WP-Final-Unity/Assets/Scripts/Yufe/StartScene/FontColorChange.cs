@@ -8,10 +8,14 @@ public class FontColorChange : MonoBehaviour
     private int period = 0;
     private float changeSpeed = 200f;
 
+    void Start()
+    {
+        Cursor.visible = true;
+    }
+
     void Update()
     {
-
-
+        
         count += changeSpeed * Time.deltaTime;
         if(count >= 255f)
         {
