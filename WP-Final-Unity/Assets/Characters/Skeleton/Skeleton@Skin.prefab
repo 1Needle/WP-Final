@@ -1457,7 +1457,7 @@ MonoBehaviour:
   runSpeed: 5
   detectRadius: 60
   attackRadius: 1
-  aggroRadius: 80
+  aggroRadius: 500
   activityRange: 500
   attackCooldown: 3
   clearCorpseTime: 30

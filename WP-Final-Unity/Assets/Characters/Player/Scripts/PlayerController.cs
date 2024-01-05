@@ -276,12 +276,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private float CD_Skills_Explosion_timer = 0f;  // �p�ɾ��ܼ�
-    private float CD_Skills_Explosion_duration = 60f;  // �p�ɪ��`�ɶ�
+    private float CD_Skills_Explosion_duration = 20f;  // �p�ɪ��`�ɶ�
     private void CoolDown_Skills_Explosion()
     {
         // ��s�p�ɾ�
         CD_Skills_Explosion_timer += Time.deltaTime;
-        textMeshPro_Explosion.text = $"{60 - (int)CD_Skills_Explosion_timer}";
+        textMeshPro_Explosion.text = $"{20 - (int)CD_Skills_Explosion_timer}";
 
         // �ˬd�O�_�W�L�F���w���ɶ�
         if (CD_Skills_Explosion_timer >= CD_Skills_Explosion_duration)
