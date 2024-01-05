@@ -246,7 +246,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 761.2, y: 428.12}
+  m_SizeDelta: {x: 837.32, y: 470.921}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4524156700136652953
 CanvasRenderer:
@@ -452,7 +452,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 899.6, y: 505.7}
+  m_SizeDelta: {x: 989.56, y: 556.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2857946345880452592
 CanvasRenderer:
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 2502332647310167956}
   - component: {fileID: 7570762107904806295}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: Skill_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

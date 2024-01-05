@@ -601,7 +601,7 @@ MonoBehaviour:
     m_Bits: 64
   speed: 3
   gravity: -19.8
-  jumpHeight: 2
+  jumpHeight: 3.5
   rotationSpeed: 4
   playerData: {fileID: 3894512679699840803}
   textMeshPro_OnFire: {fileID: 0}
