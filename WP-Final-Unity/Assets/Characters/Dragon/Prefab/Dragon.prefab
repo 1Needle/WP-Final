@@ -1632,12 +1632,12 @@ MonoBehaviour:
   magicAttackScript: {fileID: 9223177992474325586, guid: cec6119170468b54d8e957cf56029eea, type: 3}
   audio: {fileID: 4861558363221188314}
   healthbar: {fileID: 115146182403723897}
-  maxHealth: 100
+  maxHealth: 500
   walkSpeed: 5
-  runSpeed: 10
-  sideWalkRadius: 15
-  meleeCombatRange: 10
-  rangedCombatRange: 20
+  runSpeed: 13
+  sideWalkRadius: 10
+  meleeCombatRange: 7
+  rangedCombatRange: 15
   detectRadius: 50
   aggroRadius: 40
   basicAttackRange: 7

@@ -63,6 +63,7 @@ public class DragonScripts : Character
     [SerializeField] int magicCount;
 
     // Private Variables
+    GameHandler gameHandler;
     Animator animator;
     GameObject player;
     Vector3 playerPos;
@@ -78,6 +79,7 @@ public class DragonScripts : Character
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
         speed = 0;
         health = maxHealth;
     }
@@ -430,6 +432,7 @@ public class DragonScripts : Character
     }
     void Death()
     {
+        gameHandler.GameFinised(true);
         audio.Death();
         animator.SetTrigger("Death");
         ignited = false;

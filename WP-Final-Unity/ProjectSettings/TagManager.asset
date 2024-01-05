@@ -12,6 +12,7 @@ TagManager:
   - DragonFeet
   - DragonNeck
   - NPC2
+  - GameHandler
   layers:
   - Default
   - TransparentFX
