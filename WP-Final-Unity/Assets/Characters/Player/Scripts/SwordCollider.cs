@@ -136,6 +136,7 @@ public class SwordCollider : MonoBehaviour
                 {
                     DragonScripts dragonScript = character.GetComponent<DragonScripts>();
                     dragonScript.PartDamage(dmg, other.tag);
+                Debug.Log(other.name);
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 enum State
@@ -20,6 +21,7 @@ enum State
 [RequireComponent(typeof(Animator))]
 public class DragonScripts : Character
 {
+    [SerializeField] Transform spawnPoint;
     [Header("Objects")]
     [SerializeField] GameObject magicAttackAnimation;
     [SerializeField] GameObject onFireAnimation;
@@ -76,6 +78,11 @@ public class DragonScripts : Character
 
     State state;
 
+
+    public void Return()
+    {
+        transform.position = spawnPoint.position;
+    }
     // Start is called before the first frame update
 
     private void Start()
@@ -91,6 +98,7 @@ public class DragonScripts : Character
     // Update is called once per frame
     void Update()
     {
+
         playerPos = player.transform.position;
         float distance = Vector3.Distance(transform.position, playerPos);
         switch(state)
