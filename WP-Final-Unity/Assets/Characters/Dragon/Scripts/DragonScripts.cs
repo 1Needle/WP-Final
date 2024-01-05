@@ -63,6 +63,7 @@ public class DragonScripts : Character
     [SerializeField] int magicCount;
 
     // Private Variables
+    Rigidbody rigidbody;
     GameHandler gameHandler;
     Animator animator;
     GameObject player;
@@ -74,14 +75,17 @@ public class DragonScripts : Character
     bool ignited = false, invincible = false;
 
     State state;
+
     // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
+        rigidbody = GetComponent<Rigidbody>();
         speed = 0;
         health = maxHealth;
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>();
     }
 
     // Update is called once per frame
@@ -365,6 +369,7 @@ public class DragonScripts : Character
             Invoke(nameof(DisableInvincible), 0.1f);
             audio.Hurt();
             health -= damage;
+            Debug.Log($"health : {health}, maxHealth : {maxHealth}, health / maxHealth : {health / maxHealth}");
             healthbar.UpdateHealthbar(health / maxHealth);
             if (health <= 0)
             {
@@ -384,6 +389,7 @@ public class DragonScripts : Character
     // Public Functions
     public void PartDamage(float damage, string tag)
     {
+        Debug.Log($"Part Damage : {damage}, tag : {tag}");
         float multiplier = 0f;
         if (tag == "DragonHead")
             multiplier = 1.5f;
