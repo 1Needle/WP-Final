@@ -1624,6 +1624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d933cca43209ee4eab8198240642ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 0}
   magicAttackAnimation: {fileID: 8378648546881499446, guid: cec6119170468b54d8e957cf56029eea, type: 3}
   onFireAnimation: {fileID: 1188172531600160255}
   basicAttackScript: {fileID: 399079208989293112}
@@ -1640,7 +1641,7 @@ MonoBehaviour:
   rangedCombatRange: 20
   detectRadius: 50
   aggroRadius: 40
-  basicAttackRange: 10
+  basicAttackRange: 9
   basicAttackDamage: 30
   clawAttackRange: 12
   clawAttackDamage: 50

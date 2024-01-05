@@ -1455,7 +1455,7 @@ MonoBehaviour:
   maxHealth: 100
   walkSpeed: 3
   runSpeed: 5
-  detectRadius: 60
+  detectRadius: 500
   attackRadius: 1
   aggroRadius: 500
   activityRange: 500
