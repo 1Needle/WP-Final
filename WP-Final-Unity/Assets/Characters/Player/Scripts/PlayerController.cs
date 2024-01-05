@@ -286,6 +286,7 @@ public class PlayerController : MonoBehaviour
         // �ˬd�O�_�W�L�F���w���ɶ�
         if (CD_Skills_Explosion_timer >= CD_Skills_Explosion_duration)
         {
+            skills_Explosion_OK = true;
             skills_Explosion_IsCD = false;
             textMeshPro_Explosion.text = "";
 
