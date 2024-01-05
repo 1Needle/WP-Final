@@ -1633,6 +1633,7 @@ MonoBehaviour:
   magicAttackScript: {fileID: 9223177992474325586, guid: cec6119170468b54d8e957cf56029eea, type: 3}
   audio: {fileID: 4861558363221188314}
   healthbar: {fileID: 115146182403723897}
+  teleportAnimation: {fileID: 2965222256817593503, guid: 74e5ef52d4553c5448c482f5cdce593d, type: 3}
   maxHealth: 300
   walkSpeed: 5
   runSpeed: 15

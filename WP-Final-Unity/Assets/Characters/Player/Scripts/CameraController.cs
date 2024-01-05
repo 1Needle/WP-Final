@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
     {
 
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
-        cameraHeight += mouseY;
+        cameraHeight -= mouseY;
         if (cameraHeight >= 10)
             cameraHeight = 10f;
         if (cameraHeight <= 0.5)

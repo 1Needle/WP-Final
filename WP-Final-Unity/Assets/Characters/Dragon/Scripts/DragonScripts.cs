@@ -31,6 +31,7 @@ public class DragonScripts : Character
     [SerializeField] MagicAttackScript magicAttackScript;
     [SerializeField] new DragonAudioHandler audio;
     [SerializeField] Healthbar healthbar;
+    [SerializeField] GameObject teleportAnimation;
 
     [Header("Stats")]
     [SerializeField] float maxHealth;
@@ -81,6 +82,8 @@ public class DragonScripts : Character
 
     public void Return()
     {
+        Transform teleport = Instantiate(teleportAnimation).transform;
+        teleport.position = transform.position + new Vector3(0, 3, 0);
         transform.position = spawnPoint.position;
     }
     // Start is called before the first frame update
