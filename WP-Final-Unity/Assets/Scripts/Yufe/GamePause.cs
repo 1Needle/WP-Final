@@ -32,11 +32,15 @@ public class GamePause : MonoBehaviour
 
         if(Pause)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             PauseUI.SetActive(true);
             Time.timeScale = 0f;
         }  
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             PauseUI.SetActive(false);
             Time.timeScale = 1f;
         }
