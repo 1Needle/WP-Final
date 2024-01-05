@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class DragonSpawner : MonoBehaviour
 {
-    [SerializeField] Transform player;
     [SerializeField] GameObject Boss;
-    [SerializeField] GameObject BossSample;
+    [SerializeField] GameObject Enemy;
+    [SerializeField] Collider collider;
 
-    void Update()
+    private bool BossSpawn = false;
+
+    void OnTriggerEnter(Collider other)
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance <= 5f)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            BossSample.SetActive(false);
-            Boss.SetActive(true);
-        }
+            if (BossSpawn == false)
+            {
+                Debug.Log("Enter Boss Room");
+                BossSpawn = true;
+                Boss.SetActive(true);
+                Enemy.SetActive(false);
+                collider.enabled = false;
+            }
 
-        
+        }
     }
 }
