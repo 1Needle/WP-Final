@@ -19,12 +19,16 @@ public class LastDoorControllerScript : MonoBehaviour
     private void Start()
     {
         npcDialogue = "Device Actived 0 / 4";
+        npcDialogue += "\n";
+        npcDialogue += "Killed 60 enemies to proceed";
         dialogueText.text = npcDialogue;
     }
 
     private void Update()
     {
         npcDialogue = "Device Actived " + ActivedDeviceCount + " / 4";
+        npcDialogue += "\n";
+        npcDialogue += "Killed 60 enemies to proceed";
         dialogueText.text = npcDialogue;
 
         Debug.Log("ActivedDevice:" + ActivedDeviceCount);
