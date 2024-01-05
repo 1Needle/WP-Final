@@ -28,8 +28,6 @@ public class PlayerData : Character
         rawImage30.enabled = false;
         rawImage60.enabled = false;
         Particle_Onfire.gameObject.SetActive(false);
-
-        Fire_Hurt(1, 5);
     }
 
     private bool IsDie = false;
