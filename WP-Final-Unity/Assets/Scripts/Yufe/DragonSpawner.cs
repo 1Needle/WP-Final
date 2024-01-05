@@ -12,7 +12,7 @@ public class DragonSpawner : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if(other.CompareTag("Player"))
         {
             if (BossSpawn == false)
             {
