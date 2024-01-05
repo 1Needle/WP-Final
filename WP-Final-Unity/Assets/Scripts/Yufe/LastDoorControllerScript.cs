@@ -29,7 +29,7 @@ public class LastDoorControllerScript : MonoBehaviour
 
         Debug.Log("ActivedDevice:" + ActivedDeviceCount);
 
-        if (ActivedDeviceCount == 4)
+        if (ActivedDeviceCount == 4 && enemyOK == true)
         {
             OpenDoor();
             SelfDestroy = true;
@@ -59,5 +59,11 @@ public class LastDoorControllerScript : MonoBehaviour
         ActivedDeviceCount++;
     }
 
+    bool enemyOK = false;
+
+    public void Enemy_Enough()
+    {
+        enemyOK = true;
+    }
 }
 

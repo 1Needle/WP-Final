@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField] SwordCollider swordCollider;
     [SerializeField] GameObject Player;
     [SerializeField] TextMeshProUGUI W_L;
     [SerializeField] TextMeshProUGUI PlayTime;
@@ -43,7 +44,8 @@ public class GameHandler : MonoBehaviour
 
     public void OneKill()
     { 
-        EnemyKilledCount++; 
+        EnemyKilledCount++;
+        swordCollider.gamehandler_Enemy();
     }
 
     public void GameFinised(bool WIN)

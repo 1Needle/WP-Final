@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using TMPro;
 
 public class SwordCollider : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI Text_killedEnemy;
+    [SerializeField] LastDoorControllerScript lastDoorControllerScript;
+
     [SerializeField] GameObject Particle_StarHit;
     [SerializeField] GameObject Particle_StoneHit;
     [SerializeField] Transform This;
@@ -24,35 +28,47 @@ public class SwordCollider : MonoBehaviour
         playerController = GameObject.FindObjectOfType<PlayerController>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         capsuleCollider.enabled = false;
+        Text_killedEnemy.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
         bool Attacking = playerController.Get_Attacking();
-        if(Attacking == false)
+        if (Attacking == false)
         {
             SwordCollision = false;
             capsuleCollider.enabled = false;
         }
-        if(Attacking == true && SwordCollision == false && thisAttacking == false)
+        if (Attacking == true && SwordCollision == false && thisAttacking == false)
         {
             thisAttacking = true;
             Delay_On = true;
             Collider_Closer = true;
         }
 
-        if(Delay_On == true)
+        if (Delay_On == true)
         {
             Delay_SwordCollider();
         }
-        if(Collider_Closer == true)
+        if (Collider_Closer == true)
         {
             Collider_Closer_SwordCollider();
         }
         if (thisAttacking == true)
         {
             thisAttacking_SwordCollider();
+        }
+
+        if (killedEnemy >= 0 && killedEnemy < 60)
+        {
+            Text_killedEnemy.text = $"KilledEnemy: {killedEnemy}/60";
+        }
+
+        if (killedEnemy >= 60)
+        {
+            Text_killedEnemy.text = "";
+            lastDoorControllerScript.Enemy_Enough();
         }
     }
 
@@ -112,6 +128,7 @@ public class SwordCollider : MonoBehaviour
         }
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
         // �ˬd�I������H�O�_�֦����w������
@@ -131,17 +148,17 @@ public class SwordCollider : MonoBehaviour
                 character.Fire_Hurt(Fire_dmg, 3);
             }
 
-                //Debug.Log($"Player->Enemy: {dmg}");
-                if(character.name == "Dragon")
-                {
-                    DragonScripts dragonScript = character.GetComponent<DragonScripts>();
-                    dragonScript.PartDamage(dmg, other.tag);
+            //Debug.Log($"Player->Enemy: {dmg}");
+            if (character.name == "Dragon")
+            {
+                DragonScripts dragonScript = character.GetComponent<DragonScripts>();
+                dragonScript.PartDamage(dmg, other.tag);
                 Debug.Log(other.name);
-                }
-                else
-                {
-                    character.Hurt(dmg);
-                }
+            }
+            else
+            {
+                character.Hurt(dmg);
+            }
 
             float left_explosion_CD = playerController.Get_Skills_Explosion_leftCD();
             if (left_explosion_CD > 0)
@@ -150,7 +167,6 @@ public class SwordCollider : MonoBehaviour
                 playerController.Receive_Skills_Explosion_minus_CD(rndnum);
             }
 
-            
             Instantiate(Particle_StarHit, This.position, Quaternion.identity);
             Instantiate(Particle_StoneHit, This.position, Quaternion.identity);
 
@@ -172,5 +188,11 @@ public class SwordCollider : MonoBehaviour
     public bool Get_SwordCollision()
     {
         return SwordCollision;
+    }
+
+    int killedEnemy = -5;
+    public void gamehandler_Enemy()
+    {
+        killedEnemy++;
     }
 }
